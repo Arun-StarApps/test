@@ -10,9 +10,14 @@ module LetscaleRuby
   end
 
   class Railtie < Rails::Railtie
-    config.after_initialize do
-      Initializer.run
-    end
+      config.after_initialize do
+        # Don't start the reporter in a Rails console.
+        # NOTE: This is untested because we initialize the Rails test app in test_helper.rb,
+        # so the reporter has already started before any of the tests run. You can manually
+        # test this by running `DYNO=web.1 rails c` in sample-apps/rails-sample.
+        puts "================ inside railtie================"  unless defined?(::Rails::Console)
+        # Initializer.run
+      end
   end
   require('letscale_ruby/models/letscale_ruby')
 
