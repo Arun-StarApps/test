@@ -15,7 +15,8 @@ module LetscaleRuby
         # NOTE: This is untested because we initialize the Rails test app in test_helper.rb,
         # so the reporter has already started before any of the tests run. You can manually
         # test this by running `DYNO=web.1 rails c` in sample-apps/rails-sample.
-        puts "================ inside railtie================"  unless defined?(::Rails::Console)
+        puts "check========== #{ ENV["DYNO"]}"
+        puts "================ inside railtie================"  if ENV["DYNO"]&.start_with?("worker")
         # Initializer.run
       end
   end
